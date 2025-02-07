@@ -14,18 +14,10 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Overview",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
             "group": "Account Management",
             "pages": [
-              "api-reference/endpoint/getGasPrice",
               "api-reference/endpoint/createAccount",
               "api-reference/endpoint/getBalance",
-              "api-reference/endpoint/getNonce",
               "api-reference/endpoint/getAccountInfo"
             ]
           },
@@ -33,19 +25,14 @@
             "group": "Transaction Operations",
             "pages": [
               "api-reference/endpoint/sendTransaction",
-              "api-reference/endpoint/getTransaction",
-              "api-reference/endpoint/getTransactionReceipt",
-              "api-reference/endpoint/estimateGas",
-              "api-reference/endpoint/simulateTransaction"
+              "api-reference/endpoint/getTransaction"
             ]
           },
           {
             "group": "Smart Contract Operations",
             "pages": [
               "api-reference/endpoint/callContract",
-              "api-reference/endpoint/sendContractTransaction",
-              "api-reference/endpoint/deployContract",
-              "api-reference/endpoint/getContractLogs"
+              "api-reference/endpoint/deployContract"
             ]
           },
           {
@@ -55,15 +42,6 @@
               "api-reference/endpoint/updateState",
               "api-reference/endpoint/finalizeStatefulTransaction",
               "api-reference/endpoint/cancelStatefulTransaction"
-            ]
-          },
-          {
-            "group": "Block & Log Queries",
-            "pages": [
-              "api-reference/endpoint/getBlock",
-              "api-reference/endpoint/getLatestBlock",
-              "api-reference/endpoint/getBlockTransactions",
-              "api-reference/endpoint/getLogs"
             ]
           },
           {
