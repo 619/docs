@@ -1,9 +1,9 @@
 ---
 title: "createAccount"
-description: "API documentation for createAccount"
+description: "Creates a new wallet account on the blockchain. Optionally returns a private key if requested."
 ---
 
-# createAccount
+## API Details
 
 ```typescript
 POST /api/account/create
@@ -15,36 +15,36 @@ POST /api/account/create
 }
 ```
 
-[... Include all endpoint documentation from the previous RPC docs artifact ...]
+## Parameters
 
-## WebSocket API
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `returnPrivateKey` | `boolean` | No | If true, includes the private key in the response. Defaults to false. |
 
-Connect to our WebSocket endpoint for real-time updates:
+## Returns
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `address` | `string` | The newly created wallet address |
+| `privateKey` | `string` | (Optional) The private key for the wallet. Only included if returnPrivateKey is true |
+
+## Example Request
 
 ```typescript
-const ws = new WebSocket('wss://ws.yourchain.com');
-```
+const response = await fetch('https://api.yourchain.com/api/account/create', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer your-api-key',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    returnPrivateKey: true
+  })
+});
 
-### Subscription Types
-- Block updates
-- Transaction confirmations
-- State channel updates
-
-## Error Handling
-
-All API errors follow this format:
-```typescript
-{
-  error: true,
-  code: string,
-  message: string,
-  details?: any
-}
-```
-
-Common error codes:
-- `AUTH_ERROR`: Authentication failed
-- `INVALID_PARAMS`: Invalid parameters
-- `TX_FAILED`: Transaction failed
-- `CONTRACT_ERROR`: Smart contract error
+const account = await response.json();
+// {
+//   address: "0x1234567890abcdef1234567890abcdef12345678",
+//   privateKey: "0xabc123..." // Only if returnPrivateKey was true
+// }
 ```
