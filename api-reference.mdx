@@ -1,0 +1,613 @@
+```mdx
+---
+title: 'API Reference'
+description: 'Complete API documentation for Your Chain'
+---
+
+# API Reference
+
+## Authentication
+
+All API requests require an API key passed in the headers:
+
+```typescript
+headers: {
+  'Authorization': 'Bearer your-api-key'
+}
+```
+
+## RPC Functions
+
+### Account Management
+
+#### getGasPrice
+Returns the current gas price or fee model.
+
+**Returns**
+```typescript
+{
+  gasPrice: number  // Current gas price in network units
+}
+```
+
+#### createAccount
+Generates a new wallet address with optional private key.
+
+**Parameters**
+```typescript
+{
+  returnPrivateKey?: boolean  // Whether to include private key in response
+}
+```
+
+**Returns**
+```typescript
+{
+  address: string,
+  privateKey?: string  // Only included if returnPrivateKey is true
+}
+```
+
+#### getBalance
+Returns the balance of a given address.
+
+**Parameters**
+```typescript
+{
+  address: string  // Address to query
+}
+```
+
+**Returns**
+```typescript
+{
+  balance: number  // Balance in network units
+}
+```
+
+#### getNonce
+Returns the current transaction nonce for an account.
+
+**Parameters**
+```typescript
+{
+  address: string  // Address to query
+}
+```
+
+**Returns**
+```typescript
+{
+  nonce: number  // Current nonce value
+}
+```
+
+#### getAccountInfo
+Returns metadata about an account.
+
+**Parameters**
+```typescript
+{
+  address: string  // Address to query
+}
+```
+
+**Returns**
+```typescript
+{
+  balance: number,
+  nonce: number,
+  transactions: Array<{
+    id: string,
+    timestamp: Date,
+    type: string,
+    status: string,
+    data: any
+  }>
+}
+```
+
+### Transaction Operations
+
+#### sendTransaction
+Broadcasts a signed transaction to the network.
+
+**Parameters**
+```typescript
+{
+  from: string,     // Sender address
+  to: string,       // Recipient address
+  value: number,    // Amount to send
+  nonce: number,    // Transaction nonce
+  signature: string // Transaction signature
+  data?: any        // Optional transaction data
+}
+```
+
+**Returns**
+```typescript
+{
+  txHash: string  // Transaction hash
+}
+```
+
+#### getTransaction
+Retrieves transaction details by hash.
+
+**Parameters**
+```typescript
+{
+  txHash: string  // Transaction hash to query
+}
+```
+
+**Returns**
+```typescript
+{
+  id: string,
+  timestamp: Date,
+  type: string,
+  sender: string,
+  status: string,
+  data: any,
+  stateChanges?: any
+}
+```
+
+#### getTransactionReceipt
+Returns transaction status and receipt.
+
+**Parameters**
+```typescript
+{
+  txHash: string  // Transaction hash to query
+}
+```
+
+**Returns**
+```typescript
+{
+  status: 'pending' | 'confirmed' | 'failed',
+  error?: string,
+  timestamp: Date,
+  blockNumber?: number
+}
+```
+
+#### estimateGas
+Estimates gas required for a transaction.
+
+**Parameters**
+```typescript
+{
+  from: string,   // Sender address
+  to: string,     // Recipient address
+  value?: number, // Amount to send
+  data?: any      // Transaction data
+}
+```
+
+**Returns**
+```typescript
+{
+  gasEstimate: number  // Estimated gas amount
+}
+```
+
+#### simulateTransaction
+Simulates a transaction without broadcasting.
+
+**Parameters**
+```typescript
+{
+  from: string,   // Sender address
+  to: string,     // Recipient address
+  value?: number, // Amount to send
+  data?: any      // Transaction data
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  gasUsed: number,
+  returnValue?: any,
+  error?: string
+}
+```
+
+### Smart Contract Operations
+
+#### callContract
+Reads data from a smart contract (view function).
+
+**Parameters**
+```typescript
+{
+  contractAddress: string,  // Contract address
+  method: string,          // Method name
+  params: any[]            // Method parameters
+}
+```
+
+**Returns**
+```typescript
+{
+  result: any  // Method return value
+}
+```
+
+#### sendContractTransaction
+Calls a smart contract function that modifies state.
+
+**Parameters**
+```typescript
+{
+  contractAddress: string,  // Contract address
+  method: string,          // Method name
+  params: any[],           // Method parameters
+  sender: string,          // Transaction sender
+  gasLimit: number         // Maximum gas
+}
+```
+
+**Returns**
+```typescript
+{
+  txHash: string  // Transaction hash
+}
+```
+
+#### getContractLogs
+Retrieves past event logs from a contract.
+
+**Parameters**
+```typescript
+{
+  contractAddress: string,    // Contract address
+  fromBlock?: number,         // Starting block number
+  toBlock?: number,          // Ending block number
+  eventName?: string         // Specific event to query
+}
+```
+
+**Returns**
+```typescript
+{
+  logs: Array<{
+    blockNumber: number,
+    timestamp: Date,
+    event: string,
+    data: any
+  }>
+}
+```
+
+### Block Operations
+
+#### getBlock
+Returns details about a specific block.
+
+**Parameters**
+```typescript
+{
+  blockNumberOrHash: string | number  // Block identifier
+}
+```
+
+**Returns**
+```typescript
+{
+  number: number,
+  timestamp: Date,
+  transactions: Array<{
+    id: string,
+    type: string,
+    sender: string,
+    status: string
+  }>
+}
+```
+
+#### getLatestBlock
+Returns the latest block details.
+
+**Returns**
+```typescript
+{
+  number: number,
+  timestamp: Date,
+  transactions: Array<{
+    id: string,
+    type: string,
+    sender: string,
+    status: string
+  }>
+}
+```
+
+#### getBlockTransactions
+Retrieves all transactions in a block.
+
+**Parameters**
+```typescript
+{
+  blockNumberOrHash: string | number  // Block identifier
+}
+```
+
+**Returns**
+```typescript
+{
+  transactions: Array<{
+    id: string,
+    timestamp: Date,
+    type: string,
+    sender: string,
+    status: string,
+    data: any
+  }>
+}
+```
+
+### Token Operations
+
+#### getTokenBalance
+Returns the balance of a specific token for an address.
+
+**Parameters**
+```typescript
+{
+  address: string,      // Wallet address
+  tokenAddress: string  // Token contract address
+}
+```
+
+**Returns**
+```typescript
+{
+  balance: number  // Token balance
+}
+```
+
+#### sendToken
+Transfers tokens between addresses.
+
+**Parameters**
+```typescript
+{
+  sender: string,       // Sender address
+  recipient: string,    // Recipient address
+  tokenAddress: string, // Token contract address
+  amount: number        // Amount to transfer
+}
+```
+
+**Returns**
+```typescript
+{
+  txHash: string  // Transaction hash
+}
+```
+
+### Utility Functions
+
+#### signMessage
+Signs a message with a private key.
+
+**Parameters**
+```typescript
+{
+  message: string,    // Message to sign
+  privateKey: string  // Private key
+}
+```
+
+**Returns**
+```typescript
+{
+  signature: string  // Message signature
+}
+```
+
+#### verifySignature
+Verifies a message signature.
+
+**Parameters**
+```typescript
+{
+  message: string,   // Original message
+  signature: string, // Signature to verify
+  address: string    // Signer address
+}
+```
+
+**Returns**
+```typescript
+{
+  valid: boolean  // Signature validity
+}
+```
+
+#### getAddressFromPublicKey
+Converts a public key to an address.
+
+**Parameters**
+```typescript
+{
+  publicKey: string  // Public key
+}
+```
+
+**Returns**
+```typescript
+{
+  address: string  // Corresponding address
+}
+```
+
+### Stateful Transaction Operations
+
+#### initiateStatefulTransaction
+Initiates a new stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  participants: string[],  // Participating addresses
+  initialState: any,      // Initial state object
+  maxDuration: number,    // Channel duration in seconds
+  conditions?: {          // Optional channel conditions
+    [key: string]: any
+  }
+}
+```
+
+**Returns**
+```typescript
+{
+  channelId: string,
+  startTime: Date,
+  expirationTime: Date,
+  initialStateHash: string
+}
+```
+
+#### updateStatefulTransaction
+Updates state within a stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  channelId: string,   // Channel ID
+  newState: any,       // New state object
+  signature: string,   // State signature
+  stateProof?: string // ZK-SNARK proof if required
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  stateHash: string,
+  timestamp: Date
+}
+```
+
+#### finalizeStatefulTransaction
+Finalizes a stateful transaction.
+
+**Parameters**
+```typescript
+{
+  channelId: string,     // Channel ID
+  finalState: any,       // Final state
+  signatures: string[],  // All participant signatures
+  finalStateProof: string // Final ZK-SNARK proof
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  transactionId: string,
+  finalStateHash: string
+}
+```
+
+#### cancelStatefulTransaction
+Cancels a stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  channelId: string,  // Channel ID
+  reason: string,     // Cancellation reason
+  signature: string   // Cancelling party signature
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  cancelTime: Date
+}
+```
+
+#### getStatefulTransactionState
+Retrieves current state of a stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  channelId: string  // Channel ID
+}
+```
+
+**Returns**
+```typescript
+{
+  status: 'active' | 'finalized' | 'cancelled',
+  currentState: any,
+  lastUpdateTime: Date,
+  participants: string[],
+  stateHistory: Array<{
+    state: any,
+    timestamp: Date,
+    updatedBy: string
+  }>
+}
+```
+
+## API Endpoints
+
+### Authentication
+
+#### createAccount
+```typescript
+POST /api/account/create
+
+// Response
+{
+  address: string,
+  privateKey?: string
+}
+```
+
+[... Include all endpoint documentation from the previous RPC docs artifact ...]
+
+## WebSocket API
+
+Connect to our WebSocket endpoint for real-time updates:
+
+```typescript
+const ws = new WebSocket('wss://ws.yourchain.com');
+```
+
+### Subscription Types
+- Block updates
+- Transaction confirmations
+- State channel updates
+
+## Error Handling
+
+All API errors follow this format:
+```typescript
+{
+  error: true,
+  code: string,
+  message: string,
+  details?: any
+}
+```
+
+Common error codes:
+- `AUTH_ERROR`: Authentication failed
+- `INVALID_PARAMS`: Invalid parameters
+- `TX_FAILED`: Transaction failed
+- `CONTRACT_ERROR`: Smart contract error
+```

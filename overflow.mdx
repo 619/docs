@@ -1,0 +1,366 @@
+# Mintlify Documentation Structure
+
+```
+docs/
+├── mint.json              # Main configuration file
+├── assets/               # Images and other static assets
+│   ├── favicon.png
+│   └── logo.png
+├── introduction.mdx      # Landing page and getting started
+├── concepts.mdx          # Core concepts and architecture
+├── api-reference.mdx     # Complete API documentation
+├── guides.mdx           # Implementation guides and tutorials
+└── resources.mdx        # Additional resources and FAQ
+```
+
+## File Contents
+
+### mint.json
+```json
+{
+  "name": "Your Chain Name",
+  "logo": {
+    "light": "/assets/logo.png",
+    "dark": "/assets/logo.png"
+  },
+  "favicon": "/assets/favicon.png",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373"
+  },
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/yourusername/yourrepo"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://docs.yourchain.com/introduction"
+  },
+  "anchors": [
+    {
+      "name": "API Reference",
+      "icon": "code",
+      "url": "api-reference"
+    },
+    {
+      "name": "Community",
+      "icon": "discord",
+      "url": "https://discord.gg/yourserver"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": ["introduction", "concepts"]
+    },
+    {
+      "group": "Documentation",
+      "pages": ["api-reference", "guides", "resources"]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/yourchain",
+    "github": "https://github.com/yourusername/yourrepo",
+    "discord": "https://discord.gg/yourserver"
+  }
+}
+```
+
+### introduction.mdx
+```mdx
+---
+title: 'Getting Started'
+description: 'Learn how to integrate with our blockchain in minutes'
+---
+
+# Getting Started
+
+Welcome to the Your Chain documentation. This guide will help you get started with our blockchain platform.
+
+## Quick Install
+
+```bash
+npm install @yourchain/sdk
+```
+
+## Basic Usage
+
+```typescript
+import { YourChainSDK } from '@yourchain/sdk';
+
+const sdk = new YourChainSDK({
+  endpoint: 'https://rpc.yourchain.com',
+  apiKey: 'your-api-key'
+});
+
+// Create a new account
+const account = await sdk.createAccount();
+console.log('New account:', account.address);
+```
+
+## Authentication
+
+To use the API, you'll need an API key. You can get one by:
+1. Visiting our [developer portal](https://developers.yourchain.com)
+2. Creating an account
+3. Generating an API key in your dashboard
+
+## Next Steps
+- Read about our [core concepts](/concepts)
+- Explore the [API reference](/api-reference)
+- Check out our [implementation guides](/guides)
+```
+
+### concepts.mdx
+```mdx
+---
+title: 'Core Concepts'
+description: 'Understanding the fundamental concepts of our blockchain'
+---
+
+# Core Concepts
+
+## Blockchain Architecture
+
+Our blockchain implements a unique architecture combining traditional blockchain features with state channels and zero-knowledge proofs.
+
+### State Channels
+State channels allow participants to conduct multiple transactions off-chain while maintaining security guarantees. Only the initial and final states are recorded on-chain.
+
+<img src="/assets/state-channels-diagram.png" alt="State Channels Flow" />
+
+### ZK-SNARKs Integration
+We use ZK-SNARKs to:
+- Verify state transitions
+- Ensure privacy of intermediate states
+- Validate final state computations
+
+## Transaction Types
+
+### Standard Transactions
+Traditional blockchain transactions for token transfers and basic operations.
+
+### Stateful Transactions
+Our unique implementation allowing for complex multi-step transactions with rollback capabilities.
+
+### Smart Contract Interactions
+Support for deploying and interacting with smart contracts, including our specialized stateful contract types.
+
+## Account Model
+
+Our blockchain uses an account-based model with:
+- Standard accounts (EOAs)
+- Contract accounts
+- State channel accounts
+
+## Consensus Mechanism
+
+We implement a hybrid consensus mechanism that:
+- Ensures fast finality for standard transactions
+- Provides special handling for stateful transaction channels
+- Maintains security for complex state transitions
+```
+
+### api-reference.mdx
+```mdx
+---
+title: 'API Reference'
+description: 'Complete API documentation for Your Chain'
+---
+
+# API Reference
+
+## Authentication
+
+All API requests require an API key passed in the headers:
+
+```typescript
+headers: {
+  'Authorization': 'Bearer your-api-key'
+}
+```
+
+## Endpoints
+
+### Account Management
+
+#### createAccount
+```typescript
+POST /api/account/create
+
+// Response
+{
+  address: string,
+  privateKey?: string
+}
+```
+
+[... Include all endpoint documentation from the previous RPC docs artifact ...]
+
+## WebSocket API
+
+Connect to our WebSocket endpoint for real-time updates:
+
+```typescript
+const ws = new WebSocket('wss://ws.yourchain.com');
+```
+
+### Subscription Types
+- Block updates
+- Transaction confirmations
+- State channel updates
+
+## Error Handling
+
+All API errors follow this format:
+```typescript
+{
+  error: true,
+  code: string,
+  message: string,
+  details?: any
+}
+```
+
+Common error codes:
+- `AUTH_ERROR`: Authentication failed
+- `INVALID_PARAMS`: Invalid parameters
+- `TX_FAILED`: Transaction failed
+- `CONTRACT_ERROR`: Smart contract error
+```
+
+### guides.mdx
+```mdx
+---
+title: 'Implementation Guides'
+description: 'Step-by-step guides for common implementations'
+---
+
+# Implementation Guides
+
+## Creating Your First Transaction
+
+### 1. Set Up the SDK
+```typescript
+import { YourChainSDK } from '@yourchain/sdk';
+const sdk = new YourChainSDK({
+  endpoint: 'https://rpc.yourchain.com',
+  apiKey: 'your-api-key'
+});
+```
+
+### 2. Create and Fund an Account
+```typescript
+const account = await sdk.createAccount();
+// Fund via faucet for testnet
+await sdk.requestFunds(account.address);
+```
+
+### 3. Send a Transaction
+```typescript
+const tx = await sdk.sendTransaction({
+  to: 'recipient-address',
+  value: 1000,
+  gasLimit: 21000
+});
+```
+
+## Working with State Channels
+
+### 1. Initialize a Channel
+```typescript
+const channel = await sdk.initializeStateChannel({
+  participants: ['address1', 'address2'],
+  initialState: { balance: { address1: 100, address2: 100 } }
+});
+```
+
+### 2. Update Channel State
+```typescript
+await channel.updateState({
+  newState: { balance: { address1: 90, address2: 110 } },
+  proof: generateStateProof(/* ... */)
+});
+```
+
+### 3. Finalize Channel
+```typescript
+await channel.finalize({
+  finalState: { balance: { address1: 90, address2: 110 } },
+  signatures: [sig1, sig2]
+});
+```
+
+## Deploying Smart Contracts
+
+### 1. Prepare Contract Code
+```typescript
+const contract = {
+  name: 'MyContract',
+  code: contractCode,
+  initParams: { owner: account.address }
+};
+```
+
+### 2. Deploy
+```typescript
+const deployed = await sdk.deployContract(contract);
+```
+
+### 3. Interact with Contract
+```typescript
+await sdk.callContract({
+  address: deployed.address,
+  method: 'myMethod',
+  params: ['param1', 'param2']
+});
+```
+```
+
+### resources.mdx
+```mdx
+---
+title: 'Resources'
+description: 'Additional resources and frequently asked questions'
+---
+
+# Resources
+
+## SDKs and Libraries
+
+- [JavaScript/TypeScript SDK](https://github.com/yourusername/js-sdk)
+- [Python SDK](https://github.com/yourusername/python-sdk)
+- [Rust SDK](https://github.com/yourusername/rust-sdk)
+
+## Tools
+
+- [Block Explorer](https://explorer.yourchain.com)
+- [Wallet](https://wallet.yourchain.com)
+- [Faucet](https://faucet.yourchain.com)
+
+## FAQ
+
+### What are state channels?
+State channels are a layer 2 scaling solution that allows participants to conduct multiple transactions off-chain while maintaining security guarantees...
+
+### How do ZK-SNARKs work in your system?
+We use ZK-SNARKs to verify state transitions and ensure privacy of intermediate states...
+
+### What's the difference between standard and stateful transactions?
+Standard transactions are immediate and final, while stateful transactions allow for complex multi-step operations...
+
+## Support
+
+- [Discord Community](https://discord.gg/yourserver)
+- [GitHub Issues](https://github.com/yourusername/yourrepo/issues)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/yourchain)
+
+## Updates and Security
+
+- [Change Log](https://github.com/yourusername/yourrepo/blob/main/CHANGELOG.md)
+- [Security Policy](https://github.com/yourusername/yourrepo/blob/main/SECURITY.md)
+- [Status Page](https://status.yourchain.com)
+```

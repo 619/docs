@@ -1,0 +1,48 @@
+```mdx
+---
+title: 'Core Concepts'
+description: 'Understanding the fundamental concepts of our blockchain'
+---
+
+# Core Concepts
+
+## Blockchain Architecture
+
+Our blockchain implements a unique architecture combining traditional blockchain features with state channels and zero-knowledge proofs.
+
+### State Channels
+State channels allow participants to conduct multiple transactions off-chain while maintaining security guarantees. Only the initial and final states are recorded on-chain.
+
+<img src="/assets/state-channels-diagram.png" alt="State Channels Flow" />
+
+### ZK-SNARKs Integration
+We use ZK-SNARKs to:
+- Verify state transitions
+- Ensure privacy of intermediate states
+- Validate final state computations
+
+## Transaction Types
+
+### Standard Transactions
+Traditional blockchain transactions for token transfers and basic operations.
+
+### Stateful Transactions
+Our unique implementation allowing for complex multi-step transactions with rollback capabilities.
+
+### Smart Contract Interactions
+Support for deploying and interacting with smart contracts, including our specialized stateful contract types.
+
+## Account Model
+
+Our blockchain uses an account-based model with:
+- Standard accounts (EOAs)
+- Contract accounts
+- State channel accounts
+
+## Consensus Mechanism
+
+We implement a hybrid consensus mechanism that:
+- Ensures fast finality for standard transactions
+- Provides special handling for stateful transaction channels
+- Maintains security for complex state transitions
+```

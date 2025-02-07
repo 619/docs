@@ -1,71 +1,43 @@
+```mdx
 ---
-title: Introduction
-description: "Welcome to the home of your new documentation"
+title: 'Getting Started'
+description: 'Learn how to integrate with our blockchain in minutes'
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+# Getting Started
 
-## Setting up
+Welcome to the Your Chain documentation. This guide will help you get started with our blockchain platform.
 
-The first step to world-class documentation is setting up your editing environments.
+## Quick Install
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
+```bash
+npm install @yourchain/sdk
+```
 
-## Make it yours
+## Basic Usage
 
-Update your docs to your brand and add valuable content for the best user conversion.
+```typescript
+import { YourChainSDK } from '@yourchain/sdk';
 
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
-</CardGroup>
+const sdk = new YourChainSDK({
+  endpoint: 'https://rpc.yourchain.com',
+  apiKey: 'your-api-key'
+});
+
+// Create a new account
+const account = await sdk.createAccount();
+console.log('New account:', account.address);
+```
+
+## Authentication
+
+To use the API, you'll need an API key. You can get one by:
+1. Visiting our [developer portal](https://developers.yourchain.com)
+2. Creating an account
+3. Generating an API key in your dashboard
+
+## Next Steps
+- Read about our [core concepts](/concepts)
+- Explore the [API reference](/api-reference)
+- Check out our [implementation guides](/guides)
+```
