@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Uranus API Docs",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -38,17 +38,77 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Overview",
             "pages": [
               "api-reference/introduction"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Account Management",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete"
+              "api-reference/endpoint/getGasPrice",
+              "api-reference/endpoint/createAccount",
+              "api-reference/endpoint/getBalance",
+              "api-reference/endpoint/getNonce",
+              "api-reference/endpoint/getAccountInfo"
+            ]
+          },
+          {
+            "group": "Transaction Operations",
+            "pages": [
+              "api-reference/endpoint/sendTransaction",
+              "api-reference/endpoint/getTransaction",
+              "api-reference/endpoint/getTransactionReceipt",
+              "api-reference/endpoint/estimateGas",
+              "api-reference/endpoint/simulateTransaction"
+            ]
+          },
+          {
+            "group": "Smart Contract Operations",
+            "pages": [
+              "api-reference/endpoint/callContract",
+              "api-reference/endpoint/sendContractTransaction",
+              "api-reference/endpoint/deployContract",
+              "api-reference/endpoint/getContractLogs"
+            ]
+          },
+          {
+            "group": "Stateful Transactions",
+            "pages": [
+              "api-reference/endpoint/beginStatefulTransaction",
+              "api-reference/endpoint/updateState",
+              "api-reference/endpoint/finalizeStatefulTransaction",
+              "api-reference/endpoint/cancelStatefulTransaction"
+            ]
+          },
+          {
+            "group": "Block & Log Queries",
+            "pages": [
+              "api-reference/endpoint/getBlock",
+              "api-reference/endpoint/getLatestBlock",
+              "api-reference/endpoint/getBlockTransactions",
+              "api-reference/endpoint/getLogs"
+            ]
+          },
+          {
+            "group": "Token Operations",
+            "pages": [
+              "api-reference/endpoint/getTokenBalance",
+              "api-reference/endpoint/sendToken"
+            ]
+          },
+          {
+            "group": "Utility Functions",
+            "pages": [
+              "api-reference/endpoint/signMessage",
+              "api-reference/endpoint/verifySignature",
+              "api-reference/endpoint/getAddressFromPublicKey"
+            ]
+          },
+          {
+            "group": "WebSocket API",
+            "pages": [
+              "api-reference/endpoint/subscribe_blocks"
             ]
           }
         ]
@@ -79,23 +139,15 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://blockexplorer.replit.com"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/619"
     }
   }
 }
