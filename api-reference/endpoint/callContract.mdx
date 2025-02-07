@@ -1,22 +1,52 @@
 ---
 title: "callContract"
-description: "Reads data from a smart contract (view function)."
+description: "Calls a function on an existing smart contract (read-only or state-changing), creating a contract_call transaction."
 ---
+
+**Route**
+```typescript
+POST /api/call-contract
+```
 
 **Parameters**
 ```typescript
 {
-  contractAddress: string,  // Contract address
-  method: string,          // Method name
-  params: any[]            // Method parameters
+  "from": string,
+  "contract": string,
+  "function": string,
+  "params": any[],
+  "nonce": number,
+  "signature": string
 }
 ```
 
 **Returns**
 ```typescript
 {
-  result: any  // Method return value
+  "txId": string,
+  "result": {
+    "success": boolean,
+    "returnValue": any,
+    "gasUsed": number
+  },
+  "state_changes": {
+    "before": any,
+    "after": any
+  }
 }
+
 ```
 
-
+**Example**
+```typescript
+curl -X POST https://yourdomain.com/api/call-contract \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from": "0xabcd1234...",
+    "contract": "0x9999abcDEF9999",
+    "function": "transferOwnership",
+    "params": ["0x456defABC789"],
+    "nonce": 4,
+    "signature": "0f5d96f8..."
+  }'
+```

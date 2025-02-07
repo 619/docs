@@ -3,6 +3,11 @@ title: "getBalance"
 description: "Returns the balance of a given address."
 ---
 
+**Route**
+```typescript
+GET /api/balance/:address
+```
+
 **Parameters**
 ```typescript
 {
@@ -14,6 +19,17 @@ description: "Returns the balance of a given address."
 ```typescript
 {
   balance: number  // Balance in network units
+}
+```
+
+**Example**
+```typescript
+# Example using curl
+curl -X GET https://uranusrpc.replit.com/api/balance/ce0b17951a49933d7dd6cd0d9a3df224ee19dcf636a2dc7779469327e2648ed0	
+
+# Successful JSON response:
+{
+  "balance": 5000
 }
 ```
 

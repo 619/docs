@@ -1,50 +1,36 @@
 ---
 title: "createAccount"
-description: "Creates a new wallet account on the blockchain. Optionally returns a private key if requested."
+description: "Generates a new wallet with a unique address and private key."
 ---
 
-## API Details
-
+**Route**
 ```typescript
-POST /api/account/create
+POST /api/create-account
+```
 
-// Response
+**Parameters**
+```typescript
+None
+```
+
+**Returns**
+```typescript
 {
-  address: string,
-  privateKey?: string
+  "address": string,
+  "privateKey": string
 }
 ```
 
-## Parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `returnPrivateKey` | `boolean` | No | If true, includes the private key in the response. Defaults to false. |
-
-## Returns
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `address` | `string` | The newly created wallet address |
-| `privateKey` | `string` | (Optional) The private key for the wallet. Only included if returnPrivateKey is true |
-
-## Example Request
-
+**Example**
 ```typescript
-const response = await fetch('https://api.yourchain.com/api/account/create', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer your-api-key',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    returnPrivateKey: true
-  })
-});
+# Example using curl
+curl -X POST https://uranusrpc.replit.com/api/create-account
 
-const account = await response.json();
-// {
-//   address: "0x1234567890abcdef1234567890abcdef12345678",
-//   privateKey: "0xabc123..." // Only if returnPrivateKey was true
-// }
+# JSON response:
+{
+  "address": "bfb64e2ad4fe66cf2af37ca5d6db0a7ea54f65c2",
+  "privateKey": "f8ac2b0d0fa2d1b4aff6..."
+}
 ```
+
+

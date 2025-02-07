@@ -1,0 +1,63 @@
+---
+title: "deployContract"
+description: "Deploys a brand-new smart contract onto the chain."
+---
+
+**Route**
+```typescript
+POST /api/deploy-contract
+```
+
+**Parameters**
+```typescript
+{
+  "from": string,
+  "code": string,
+  "init_params": { [key: string]: any },
+  "nonce": number,
+  "signature": string
+}
+```
+
+**Returns**
+```typescript
+{
+  "txId": string,
+  "contractAddress": string
+}
+```
+
+**Example**
+```typescript
+# Example using curl
+curl -X POST https://yourdomain.com/api/deploy-contract \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from": "0x123abcDEF456",
+    "code": "...(some contract bytecode or code)...",
+    "init_params": { "owner": "0x123abcDEF456", "initialSupply": 100000 },
+    "nonce": 5,
+    "signature": "abcd1234..."
+  }'
+
+# JSON response:
+{
+  "txId": "989fdf3428ecb4fe726f...",
+  "result": {
+    "success": true,
+    "returnValue": ["0x456defABC789"], 
+    "gasUsed": 50000
+  },
+  "state_changes": {
+    "before": {
+      "owners": ["0xabcd1234..."],
+      "...": "..."
+    },
+    "after": {
+      "owners": ["0x456defABC789"], 
+      "lastCalled": "2025-02-07T18:33:45.216Z",
+      "...": "..."
+    }
+  }
+}
+```

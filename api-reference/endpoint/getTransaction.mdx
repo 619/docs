@@ -3,24 +3,45 @@ title: "getTransaction"
 description: "Retrieves transaction details by hash."
 ---
 
+**Route**
+```typescript
+GET /api/transaction/:txId
+```
+
 **Parameters**
 ```typescript
 {
-  txHash: string  // Transaction hash to query
+  txId: string  // Transaction Id to query
 }
 ```
 
 **Returns**
 ```typescript
 {
-  id: string,
-  timestamp: Date,
-  type: string,
-  sender: string,
-  status: string,
-  data: any,
-  stateChanges?: any
+  "id": string,
+  "timestamp": string,
+  "type": string,
+  "sender": string,
+  "status": string,
+  "error"?: string,
+  "data": any,
+  "state_changes": any
 }
 ```
 
+**Example**
+```typescript
+# Example using curl
+curl -X GET https://yourdomain.com/api/transaction/c18a905fbd364b55bf
 
+# JSON response:
+{
+  "id": "c18a905fbd364b55bf",
+  "timestamp": "2025-02-01T12:34:56.789Z",
+  "type": "transfer",
+  "sender": "0x123abcDEF456",
+  "status": "pending",
+  "data": { "to": "0x456defABC789", "amount": "0x3e8" },
+  "state_changes": {}
+}
+```

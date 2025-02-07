@@ -3,23 +3,41 @@ title: "sendTransaction"
 description: "Broadcasts a signed transaction to the network."
 ---
 
+**Route**
+```typescript
+POST /api/send-transaction
+```
+
 **Parameters**
 ```typescript
 {
-  from: string,     // Sender address
-  to: string,       // Recipient address
-  value: number,    // Amount to send
-  nonce: number,    // Transaction nonce
-  signature: string // Transaction signature
-  data?: any        // Optional transaction data
+  "from": string,
+  "to": string,
+  "amount": string,   // Hex string
+  "nonce": number,
+  "signature": string // Signature of the transaction data
 }
 ```
 
 **Returns**
 ```typescript
 {
-  txHash: string  // Transaction hash
+  txId: string  // Transaction ID
 }
 ```
+**Example**
+```typescript
+curl -X POST https://yourdomain.com/api/send-transaction \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from": "0x123abcDEF456",
+    "to": "0x456defABC789",
+    "amount": "0x3e8",
+    "nonce": 3,
+    "signature": "abcd1234..."
+  }'
 
-
+{
+  "txId": "c18a905fbd364b55bf..."
+}
+```
