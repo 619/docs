@@ -34,12 +34,6 @@
               "api-reference/endpoint/callContract",
               "api-reference/endpoint/deployContract"
             ]
-          },
-          {
-            "group": "WebSocket API",
-            "pages": [
-              "api-reference/endpoint/subscribe_blocks"
-            ]
           }
         ]
       }
