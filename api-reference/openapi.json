@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Your Chain RPC API",
+    "description": "API documentation for interacting with Your Chain blockchain, including account management, transactions, contracts, and stateful transactions.",
     "license": {
       "name": "MIT"
     },
@@ -19,76 +19,22 @@
     }
   ],
   "paths": {
-    "/plants": {
+    "/rpc/getGasPrice": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "description": "Returns the current gas price or fee model.",
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Gas price response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "gasPrice": {
+                      "type": "number",
+                      "description": "Current gas price in network units"
+                    }
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -96,32 +42,186 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/rpc/createAccount": {
+      "post": {
+        "description": "Generates a new wallet address with an optional private key.",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
+            "name": "returnPrivateKey",
+            "in": "query",
+            "description": "Whether to include the private key in the response",
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "boolean"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Account creation response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string",
+                      "description": "Newly created wallet address"
+                    },
+                    "privateKey": {
+                      "type": "string",
+                      "description": "Private key (only if requested)",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rpc/getBalance": {
+      "get": {
+        "description": "Returns the balance of a given address.",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "description": "The wallet address to query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Balance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "number",
+                      "description": "Balance in network units"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rpc/sendTransaction": {
+      "post": {
+        "description": "Broadcasts a signed transaction to the network.",
+        "requestBody": {
+          "description": "Signed transaction details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Transaction"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction sent response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "txHash": {
+                      "type": "string",
+                      "description": "Transaction hash"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rpc/deployContract": {
+      "post": {
+        "description": "Deploys a smart contract on the blockchain.",
+        "requestBody": {
+          "description": "Contract deployment data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bytecode": {
+                    "type": "string",
+                    "description": "Smart contract bytecode"
+                  },
+                  "constructorParams": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Constructor parameters"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Contract deployed response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contractAddress": {
+                      "type": "string",
+                      "description": "The deployed contract address"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rpc/beginStatefulTransaction": {
+      "post": {
+        "description": "Starts a stateful transaction where intermediate states are off-chain.",
+        "requestBody": {
+          "description": "Stateful transaction initiation data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatefulTransaction"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Stateful transaction initiated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sessionId": {
+                      "type": "string",
+                      "description": "Transaction session ID"
+                    }
+                  }
                 }
               }
             }
@@ -132,55 +232,53 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "Transaction": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
+          "from": {
+            "type": "string",
+            "description": "Sender address"
           },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
+          "to": {
+            "type": "string",
+            "description": "Recipient address"
+          },
+          "value": {
+            "type": "number",
+            "description": "Amount to send"
+          },
+          "nonce": {
+            "type": "integer",
+            "description": "Transaction nonce"
+          },
+          "signature": {
+            "type": "string",
+            "description": "Transaction signature"
+          },
+          "data": {
+            "type": "string",
+            "description": "Optional transaction data",
+            "nullable": true
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
+      "StatefulTransaction": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of participating addresses"
           },
-          "message": {
-            "type": "string"
+          "initialState": {
+            "type": "object",
+            "description": "Initial transaction state"
+          },
+          "maxDuration": {
+            "type": "integer",
+            "description": "Maximum duration in seconds"
           }
         }
       }
