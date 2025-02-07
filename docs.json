@@ -36,30 +36,6 @@
             ]
           },
           {
-            "group": "Stateful Transactions",
-            "pages": [
-              "api-reference/endpoint/beginStatefulTransaction",
-              "api-reference/endpoint/updateState",
-              "api-reference/endpoint/finalizeStatefulTransaction",
-              "api-reference/endpoint/cancelStatefulTransaction"
-            ]
-          },
-          {
-            "group": "Token Operations",
-            "pages": [
-              "api-reference/endpoint/getTokenBalance",
-              "api-reference/endpoint/sendToken"
-            ]
-          },
-          {
-            "group": "Utility Functions",
-            "pages": [
-              "api-reference/endpoint/signMessage",
-              "api-reference/endpoint/verifySignature",
-              "api-reference/endpoint/getAddressFromPublicKey"
-            ]
-          },
-          {
             "group": "WebSocket API",
             "pages": [
               "api-reference/endpoint/subscribe_blocks"
