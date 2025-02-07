@@ -1,0 +1,27 @@
+---
+title: "getTransactionReceipt"
+description: "API documentation for getTransactionReceipt"
+---
+
+# getTransactionReceipt
+
+Returns transaction status and receipt.
+
+**Parameters**
+```typescript
+{
+  txHash: string  // Transaction hash to query
+}
+```
+
+**Returns**
+```typescript
+{
+  status: 'pending' | 'confirmed' | 'failed',
+  error?: string,
+  timestamp: Date,
+  blockNumber?: number
+}
+```
+
+

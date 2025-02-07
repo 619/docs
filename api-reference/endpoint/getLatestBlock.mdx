@@ -1,0 +1,24 @@
+---
+title: "getLatestBlock"
+description: "API documentation for getLatestBlock"
+---
+
+# getLatestBlock
+
+Returns the latest block details.
+
+**Returns**
+```typescript
+{
+  number: number,
+  timestamp: Date,
+  transactions: Array<{
+    id: string,
+    type: string,
+    sender: string,
+    status: string
+  }>
+}
+```
+
+

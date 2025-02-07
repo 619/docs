@@ -1,0 +1,28 @@
+---
+title: "sendContractTransaction"
+description: "API documentation for sendContractTransaction"
+---
+
+# sendContractTransaction
+
+Calls a smart contract function that modifies state.
+
+**Parameters**
+```typescript
+{
+  contractAddress: string,  // Contract address
+  method: string,          // Method name
+  params: any[],           // Method parameters
+  sender: string,          // Transaction sender
+  gasLimit: number         // Maximum gas
+}
+```
+
+**Returns**
+```typescript
+{
+  txHash: string  // Transaction hash
+}
+```
+
+

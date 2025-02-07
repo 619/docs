@@ -1,0 +1,32 @@
+---
+title: "initiateStatefulTransaction"
+description: "API documentation for initiateStatefulTransaction"
+---
+
+# initiateStatefulTransaction
+
+Initiates a new stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  participants: string[],  // Participating addresses
+  initialState: any,      // Initial state object
+  maxDuration: number,    // Channel duration in seconds
+  conditions?: {          // Optional channel conditions
+    [key: string]: any
+  }
+}
+```
+
+**Returns**
+```typescript
+{
+  channelId: string,
+  startTime: Date,
+  expirationTime: Date,
+  initialStateHash: string
+}
+```
+
+

@@ -1,0 +1,36 @@
+---
+title: "getStatefulTransactionState"
+description: "API documentation for getStatefulTransactionState"
+---
+
+# getStatefulTransactionState
+
+Retrieves current state of a stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  channelId: string  // Channel ID
+}
+```
+
+**Returns**
+```typescript
+{
+  status: 'active' | 'finalized' | 'cancelled',
+  currentState: any,
+  lastUpdateTime: Date,
+  participants: string[],
+  stateHistory: Array<{
+    state: any,
+    timestamp: Date,
+    updatedBy: string
+  }>
+}
+```
+
+## API Endpoints
+
+### Authentication
+
+

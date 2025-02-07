@@ -1,0 +1,34 @@
+---
+title: "getAccountInfo"
+description: "API documentation for getAccountInfo"
+---
+
+# getAccountInfo
+
+Returns metadata about an account.
+
+**Parameters**
+```typescript
+{
+  address: string  // Address to query
+}
+```
+
+**Returns**
+```typescript
+{
+  balance: number,
+  nonce: number,
+  transactions: Array<{
+    id: string,
+    timestamp: Date,
+    type: string,
+    status: string,
+    data: any
+  }>
+}
+```
+
+### Transaction Operations
+
+

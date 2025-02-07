@@ -1,0 +1,32 @@
+---
+title: "simulateTransaction"
+description: "API documentation for simulateTransaction"
+---
+
+# simulateTransaction
+
+Simulates a transaction without broadcasting.
+
+**Parameters**
+```typescript
+{
+  from: string,   // Sender address
+  to: string,     // Recipient address
+  value?: number, // Amount to send
+  data?: any      // Transaction data
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  gasUsed: number,
+  returnValue?: any,
+  error?: string
+}
+```
+
+### Smart Contract Operations
+
+

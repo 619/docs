@@ -1,0 +1,27 @@
+---
+title: "estimateGas"
+description: "API documentation for estimateGas"
+---
+
+# estimateGas
+
+Estimates gas required for a transaction.
+
+**Parameters**
+```typescript
+{
+  from: string,   // Sender address
+  to: string,     // Recipient address
+  value?: number, // Amount to send
+  data?: any      // Transaction data
+}
+```
+
+**Returns**
+```typescript
+{
+  gasEstimate: number  // Estimated gas amount
+}
+```
+
+

@@ -1,0 +1,29 @@
+---
+title: "updateStatefulTransaction"
+description: "API documentation for updateStatefulTransaction"
+---
+
+# updateStatefulTransaction
+
+Updates state within a stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  channelId: string,   // Channel ID
+  newState: any,       // New state object
+  signature: string,   // State signature
+  stateProof?: string // ZK-SNARK proof if required
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  stateHash: string,
+  timestamp: Date
+}
+```
+
+

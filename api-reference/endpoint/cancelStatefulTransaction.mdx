@@ -1,0 +1,27 @@
+---
+title: "cancelStatefulTransaction"
+description: "API documentation for cancelStatefulTransaction"
+---
+
+# cancelStatefulTransaction
+
+Cancels a stateful transaction channel.
+
+**Parameters**
+```typescript
+{
+  channelId: string,  // Channel ID
+  reason: string,     // Cancellation reason
+  signature: string   // Cancelling party signature
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  cancelTime: Date
+}
+```
+
+

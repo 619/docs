@@ -1,0 +1,50 @@
+---
+title: "createAccount"
+description: "API documentation for createAccount"
+---
+
+# createAccount
+
+```typescript
+POST /api/account/create
+
+// Response
+{
+  address: string,
+  privateKey?: string
+}
+```
+
+[... Include all endpoint documentation from the previous RPC docs artifact ...]
+
+## WebSocket API
+
+Connect to our WebSocket endpoint for real-time updates:
+
+```typescript
+const ws = new WebSocket('wss://ws.yourchain.com');
+```
+
+### Subscription Types
+- Block updates
+- Transaction confirmations
+- State channel updates
+
+## Error Handling
+
+All API errors follow this format:
+```typescript
+{
+  error: true,
+  code: string,
+  message: string,
+  details?: any
+}
+```
+
+Common error codes:
+- `AUTH_ERROR`: Authentication failed
+- `INVALID_PARAMS`: Invalid parameters
+- `TX_FAILED`: Transaction failed
+- `CONTRACT_ERROR`: Smart contract error
+```

@@ -1,0 +1,33 @@
+---
+title: "getBlockTransactions"
+description: "API documentation for getBlockTransactions"
+---
+
+# getBlockTransactions
+
+Retrieves all transactions in a block.
+
+**Parameters**
+```typescript
+{
+  blockNumberOrHash: string | number  // Block identifier
+}
+```
+
+**Returns**
+```typescript
+{
+  transactions: Array<{
+    id: string,
+    timestamp: Date,
+    type: string,
+    sender: string,
+    status: string,
+    data: any
+  }>
+}
+```
+
+### Token Operations
+
+

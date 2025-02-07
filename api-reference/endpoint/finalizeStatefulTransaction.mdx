@@ -1,0 +1,29 @@
+---
+title: "finalizeStatefulTransaction"
+description: "API documentation for finalizeStatefulTransaction"
+---
+
+# finalizeStatefulTransaction
+
+Finalizes a stateful transaction.
+
+**Parameters**
+```typescript
+{
+  channelId: string,     // Channel ID
+  finalState: any,       // Final state
+  signatures: string[],  // All participant signatures
+  finalStateProof: string // Final ZK-SNARK proof
+}
+```
+
+**Returns**
+```typescript
+{
+  success: boolean,
+  transactionId: string,
+  finalStateHash: string
+}
+```
+
+

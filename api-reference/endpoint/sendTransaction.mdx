@@ -1,0 +1,29 @@
+---
+title: "sendTransaction"
+description: "API documentation for sendTransaction"
+---
+
+# sendTransaction
+
+Broadcasts a signed transaction to the network.
+
+**Parameters**
+```typescript
+{
+  from: string,     // Sender address
+  to: string,       // Recipient address
+  value: number,    // Amount to send
+  nonce: number,    // Transaction nonce
+  signature: string // Transaction signature
+  data?: any        // Optional transaction data
+}
+```
+
+**Returns**
+```typescript
+{
+  txHash: string  // Transaction hash
+}
+```
+
+

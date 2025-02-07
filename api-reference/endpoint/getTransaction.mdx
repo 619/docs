@@ -1,0 +1,30 @@
+---
+title: "getTransaction"
+description: "API documentation for getTransaction"
+---
+
+# getTransaction
+
+Retrieves transaction details by hash.
+
+**Parameters**
+```typescript
+{
+  txHash: string  // Transaction hash to query
+}
+```
+
+**Returns**
+```typescript
+{
+  id: string,
+  timestamp: Date,
+  type: string,
+  sender: string,
+  status: string,
+  data: any,
+  stateChanges?: any
+}
+```
+
+

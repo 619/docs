@@ -1,0 +1,34 @@
+---
+title: "getContractLogs"
+description: "API documentation for getContractLogs"
+---
+
+# getContractLogs
+
+Retrieves past event logs from a contract.
+
+**Parameters**
+```typescript
+{
+  contractAddress: string,    // Contract address
+  fromBlock?: number,         // Starting block number
+  toBlock?: number,          // Ending block number
+  eventName?: string         // Specific event to query
+}
+```
+
+**Returns**
+```typescript
+{
+  logs: Array<{
+    blockNumber: number,
+    timestamp: Date,
+    event: string,
+    data: any
+  }>
+}
+```
+
+### Block Operations
+
+

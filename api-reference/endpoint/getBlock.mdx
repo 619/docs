@@ -1,0 +1,31 @@
+---
+title: "getBlock"
+description: "API documentation for getBlock"
+---
+
+# getBlock
+
+Returns details about a specific block.
+
+**Parameters**
+```typescript
+{
+  blockNumberOrHash: string | number  // Block identifier
+}
+```
+
+**Returns**
+```typescript
+{
+  number: number,
+  timestamp: Date,
+  transactions: Array<{
+    id: string,
+    type: string,
+    sender: string,
+    status: string
+  }>
+}
+```
+
+
