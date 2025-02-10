@@ -1,52 +1,64 @@
 ---
 title: "callContract"
-description: "Calls a function on an existing smart contract (read-only or state-changing), creating a contract_call transaction."
+description: "Executes a method on a deployed smart contract."
 ---
 
 **Route**
 ```typescript
-POST /api/call-contract
+POST /api/contracts/:address/execute
 ```
 
 **Parameters**
 ```typescript
 {
-  "from": string,
-  "contract": string,
-  "function": string,
-  "params": any[],
-  "nonce": number,
-  "signature": string
+  "sender": string,
+  "method": string,
+  "params": Array<any>
 }
 ```
 
 **Returns**
 ```typescript
 {
-  "txId": string,
-  "result": {
-    "success": boolean,
-    "returnValue": any,
-    "gasUsed": number
-  },
-  "state_changes": {
-    "before": any,
-    "after": any
-  }
+  "success": boolean,
+  "result": any,
+  "stateChanges": Array<{ key: string, oldValue: any, newValue: any }>
 }
-
 ```
 
-**Example**
-```typescript
-curl -X POST https://yourdomain.com/api/call-contract \
+**Example - cURL**
+```bash
+curl -X POST https://blockexplorer.replit.app/api/contracts/0xcontract123/execute \
   -H "Content-Type: application/json" \
   -d '{
-    "from": "0xabcd1234...",
-    "contract": "0x9999abcDEF9999",
-    "function": "transferOwnership",
-    "params": ["0x456defABC789"],
-    "nonce": 4,
-    "signature": "0f5d96f8..."
+    "sender": "0xuserABC",
+    "method": "transfer",
+    "params": ["0xrecipientDEF", 50]
   }'
+
+{
+  "success": true,
+  "result": "Transfer Successful",
+  "stateChanges": [
+    { "key": "balances.0xuserABC", "oldValue": 1000, "newValue": 950 },
+    { "key": "balances.0xrecipientDEF", "oldValue": 500, "newValue": 550 }
+  ]
+}
+```
+
+**Example - Typescript**
+```typescript
+import axios from "axios";
+
+async function callContract() {
+  const response = await axios.post("https://blockexplorer.replit.app/api/contracts/0xcontract123/execute", {
+    sender: "0xuserABC",
+    method: "transfer",
+    params: ["0xrecipientDEF", 50],
+  });
+
+  console.log("Execution Result:", response.data.result);
+}
+
+callContract();
 ```

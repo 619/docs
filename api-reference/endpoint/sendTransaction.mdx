@@ -5,39 +5,64 @@ description: "Broadcasts a signed transaction to the network."
 
 **Route**
 ```typescript
-POST /api/send-transaction
+POST /api/transactions
 ```
 
 **Parameters**
 ```typescript
 {
-  "from": string,
-  "to": string,
-  "amount": string,   // Hex string
-  "nonce": number,
-  "signature": string // Signature of the transaction data
+  "type": "transfer",
+  "sender": string,
+  "data": {
+    "recipient": string,
+    "amount": number
+  }
 }
 ```
 
 **Returns**
 ```typescript
 {
-  txId: string  // Transaction ID
+  "success": boolean,
+  "id": string  // Transaction ID
 }
 ```
-**Example**
-```typescript
-curl -X POST https://yourdomain.com/api/send-transaction \
+
+**Example - cURL**
+```bash
+curl -X POST https://yourdomain.com/api/transactions \
   -H "Content-Type: application/json" \
   -d '{
-    "from": "0x123abcDEF456",
-    "to": "0x456defABC789",
-    "amount": "0x3e8",
-    "nonce": 3,
-    "signature": "abcd1234..."
+    "type": "transfer",
+    "sender": "0x123abcDEF456",
+    "data": {
+      "recipient": "0x456defABC789",
+      "amount": 100
+    }
   }'
 
 {
-  "txId": "c18a905fbd364b55bf..."
+  "success": true,
+  "id": "tx_12345abcde"
 }
+```
+
+**Example - Typescript**
+```typescript
+import axios from "axios";
+
+async function sendTransaction() {
+  const response = await axios.post("https://yourdomain.com/api/transactions", {
+    type: "transfer",
+    sender: "0x123abcDEF456",
+    data: {
+      recipient: "0x456defABC789",
+      amount: 100,
+    },
+  });
+
+  console.log("Transaction ID:", response.data.id);
+}
+
+sendTransaction();
 ```

@@ -1,18 +1,11 @@
 ---
 title: "getTransaction"
-description: "Retrieves transaction details by hash."
+description: "Retrieves details of a specific transaction."
 ---
 
 **Route**
 ```typescript
-GET /api/transaction/:txId
-```
-
-**Parameters**
-```typescript
-{
-  txId: string  // Transaction Id to query
-}
+GET /api/transactions/:id
 ```
 
 **Returns**
@@ -22,26 +15,26 @@ GET /api/transaction/:txId
   "timestamp": string,
   "type": string,
   "sender": string,
-  "status": string,
-  "error"?: string,
   "data": any,
-  "state_changes": any
+  "status": string,
+  "error": string | null,
+  "stateChanges": Array<{ key: string, oldValue: any, newValue: any }>
 }
 ```
 
-**Example**
+**Example - cURL***
 ```typescript
-# Example using curl
-curl -X GET https://yourdomain.com/api/transaction/c18a905fbd364b55bf
+curl -X GET https://blockexplorer.replit.app/api/transactions/tx_12345
+```
 
-# JSON response:
-{
-  "id": "c18a905fbd364b55bf",
-  "timestamp": "2025-02-01T12:34:56.789Z",
-  "type": "transfer",
-  "sender": "0x123abcDEF456",
-  "status": "pending",
-  "data": { "to": "0x456defABC789", "amount": "0x3e8" },
-  "state_changes": {}
+**Example - Typescript**
+```typescript
+import axios from "axios";
+
+async function getTransaction(transactionId: string) {
+  const response = await axios.get(`https://blockexplorer.replit.app/api/transactions/${transactionId}`);
+  console.log("Transaction Details:", response.data);
 }
+
+getTransaction("tx_12345");
 ```

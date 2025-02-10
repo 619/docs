@@ -18,7 +18,7 @@
             "pages": [
               "api-reference/endpoint/createAccount",
               "api-reference/endpoint/getBalance",
-              "api-reference/endpoint/getAccountInfo"
+              "api-reference/endpoint/getAccount"
             ]
           },
           {

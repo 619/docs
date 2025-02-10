@@ -1,0 +1,41 @@
+---
+title: "getAccount"
+description: "Retrieves wallet details, including balance and recent transactions."
+---
+
+**Route**
+```typescript
+GET /api/account/:address
+```
+
+**Returns**
+```typescript
+{
+  "address": string,
+  "balance": number,
+  "nonce": number,
+  "recentTransactions": Array<{
+    id: string,
+    type: string,
+    timestamp: string,
+    status: string
+  }>
+}
+```
+
+**Example - cURL**
+```typescript
+curl -X GET https://blockexplorer.replit.app/api/account/0xuserABC
+```
+
+***Example - Typescript**
+```typescript
+import axios from "axios";
+
+async function getAccount(address: string) {
+  const response = await axios.get(`https://blockexplorer.replit.app/api/account/${address}`);
+  console.log("Account Details:", response.data);
+}
+
+getAccount("0xuserABC");
+```
